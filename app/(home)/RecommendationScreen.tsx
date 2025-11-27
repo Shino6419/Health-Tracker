@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Sidebar from "../../components/Sidebar";
 import { homeScreenStyles as styles } from "../../constants/homeScreenStyles";
 
 interface Recommendation {
@@ -102,7 +103,7 @@ export default function RecommendationScreen() {
   };
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Menu Button */}
+      {/* Menu Button with Header */}
       <View style={styles.headerWithMenu}>
         <TouchableOpacity
           style={styles.menuButton}
@@ -110,6 +111,7 @@ export default function RecommendationScreen() {
         >
           <Text style={styles.menuIcon}>☰</Text>
         </TouchableOpacity>
+        <Text style={[styles.title, { marginBottom: 0 }]}>Gợi ý kế hoạch</Text>
       </View>
 
       <ScrollView
@@ -119,12 +121,6 @@ export default function RecommendationScreen() {
         keyboardShouldPersistTaps="handled"
         scrollEnabled={true}
       >
-        {/* Header */}
-        <Text style={styles.title}>Gợi ý kế hoạch chăm sóc sức khỏe</Text>
-        <Text style={styles.subtitle}>
-          do AI đề xuất dựa trên thông tin của bạn
-        </Text>
-
         {/* Recommendations */}
         <View style={styles.recommendationsContainer}>
           {RECOMMENDATIONS.map((recommendation) => (
@@ -197,86 +193,8 @@ export default function RecommendationScreen() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Sidebar Modal */}
-      <Modal
-        visible={showSidebar}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowSidebar(false)}
-      >
-        <View style={styles.sidebarOverlay}>
-          <View style={styles.sidebarContent}>
-            <View style={styles.sidebarHeader}>
-              <Text style={styles.sidebarTitle}>Menu</Text>
-              <TouchableOpacity onPress={() => setShowSidebar(false)}>
-                <Text style={styles.sidebarCloseButton}>✕</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.sidebarBody}>
-              <TouchableOpacity
-                style={styles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/DashboardScreen");
-                }}
-              >
-                <Text style={styles.sidebarItemText}>Dashboard</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/HealthInfo");
-                }}
-              >
-                <Text style={styles.sidebarItemText}>Thông tin sức khỏe</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ActivityInfo");
-                }}
-              >
-                <Text style={styles.sidebarItemText}>Mức độ vận động</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/CalendarScreen");
-                }}
-              >
-                <Text style={styles.sidebarItemText}>Lịch tập luyện</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ReportsScreen");
-                }}
-              >
-                <Text style={styles.sidebarItemText}>Thống kê & Báo cáo</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(auth)/Login");
-                }}
-              >
-                <Text style={styles.sidebarItemText}>Đăng xuất</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      {/* Sidebar Component */}
+      <Sidebar visible={showSidebar} onClose={() => setShowSidebar(false)} />
 
       {/* Plan Details Modal */}
       <Modal

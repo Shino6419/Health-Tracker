@@ -1,14 +1,14 @@
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    Modal,
-    SafeAreaView,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { ActivityCard } from "../../components/ActivityCard";
+import Sidebar from "../../components/Sidebar";
 import { homeScreenStyles as menuStyles } from "../../constants/homeScreenStyles";
 
 interface HealthMetrics {
@@ -69,7 +69,7 @@ export default function DashboardScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Menu Button */}
+      {/* Menu Button with Header */}
       <View style={menuStyles.headerWithMenu}>
         <TouchableOpacity
           style={menuStyles.menuButton}
@@ -77,6 +77,7 @@ export default function DashboardScreen() {
         >
           <Text style={menuStyles.menuIcon}>☰</Text>
         </TouchableOpacity>
+        <Text style={styles.dashboardTitle}>Kết quả phân tích sức khỏe</Text>
       </View>
 
       <ScrollView
@@ -84,12 +85,6 @@ export default function DashboardScreen() {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        {/* Header */}
-        <View style={styles.dashboardHeader}>
-          <Text style={styles.dashboardTitle}>Kết quả phân tích sức khỏe</Text>
-          <Text style={styles.dashboardHeaderIcon}>⚙️</Text>
-        </View>
-
         {/* Health Metrics Cards Grid */}
         <View style={styles.metricsSection}>
           <View style={styles.metricsRow}>
@@ -135,12 +130,16 @@ export default function DashboardScreen() {
             <View style={styles.calorieStats}>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Đốt cháy</Text>
-                <Text style={styles.statValue}>{metrics.calories.burned}kcal</Text>
+                <Text style={styles.statValue}>
+                  {metrics.calories.burned}kcal
+                </Text>
               </View>
               <Text style={styles.statSeparator}>•</Text>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Tổng thu vào</Text>
-                <Text style={styles.statValue}>{metrics.calories.target}kcal</Text>
+                <Text style={styles.statValue}>
+                  {metrics.calories.target}kcal
+                </Text>
               </View>
               <Text style={styles.statSeparator}>•</Text>
               <View style={styles.statItem}>
@@ -152,86 +151,8 @@ export default function DashboardScreen() {
         </View>
       </ScrollView>
 
-      {/* Sidebar Modal */}
-      <Modal
-        visible={showSidebar}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowSidebar(false)}
-      >
-        <View style={menuStyles.sidebarOverlay}>
-          <View style={menuStyles.sidebarContent}>
-            <View style={menuStyles.sidebarHeader}>
-              <Text style={menuStyles.sidebarTitle}>Menu</Text>
-              <TouchableOpacity onPress={() => setShowSidebar(false)}>
-                <Text style={menuStyles.sidebarCloseButton}>✕</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={menuStyles.sidebarBody}>
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/DashboardScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Dashboard</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/HealthInfo");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Thông tin sức khỏe</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ActivityInfo");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Mức độ vận động</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/CalendarScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Lịch tập luyện</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ReportsScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Thống kê & Báo cáo</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(auth)/Login");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Đăng xuất</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      {/* Sidebar Component */}
+      <Sidebar visible={showSidebar} onClose={() => setShowSidebar(false)} />
     </SafeAreaView>
   );
 }

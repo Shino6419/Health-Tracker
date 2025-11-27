@@ -1,14 +1,14 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-    Dimensions,
-    Modal,
-    SafeAreaView,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import Sidebar from "../../components/Sidebar";
 import { homeScreenStyles as menuStyles } from "../../constants/homeScreenStyles";
 import { colors } from "../../constants/theme";
 
@@ -66,7 +66,8 @@ export default function ReportsScreen() {
 
   // Select data based on tab
   const weightData = selectedTab === "week" ? weightDataWeek : weightDataMonth;
-  const activityData = selectedTab === "week" ? activityDataWeek : activityDataMonth;
+  const activityData =
+    selectedTab === "week" ? activityDataWeek : activityDataMonth;
 
   const maxWeight = Math.max(...weightData.map((d) => d.value));
   const minWeight = Math.min(...weightData.map((d) => d.value));
@@ -95,7 +96,8 @@ export default function ReportsScreen() {
                 .map((d, i) => {
                   const x = (i / (weightData.length - 1)) * (screenWidth - 120);
                   const y =
-                    180 - ((d.value - minWeight) / (maxWeight - minWeight)) * 150;
+                    180 -
+                    ((d.value - minWeight) / (maxWeight - minWeight)) * 150;
                   return `${x},${y}`;
                 })
                 .join(" ")}
@@ -116,10 +118,7 @@ export default function ReportsScreen() {
               return (
                 <View
                   key={i}
-                  style={[
-                    styles.dataPoint,
-                    { left: x - 4, top: y - 4 },
-                  ]}
+                  style={[styles.dataPoint, { left: x - 4, top: y - 4 }]}
                 />
               );
             })}
@@ -169,7 +168,7 @@ export default function ReportsScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Menu Button */}
+      {/* Menu Button with Header */}
       <View style={menuStyles.headerWithMenu}>
         <TouchableOpacity
           style={menuStyles.menuButton}
@@ -177,7 +176,9 @@ export default function ReportsScreen() {
         >
           <Text style={menuStyles.menuIcon}>☰</Text>
         </TouchableOpacity>
-        <Text style={styles.reportsNotificationIcon}>🔔</Text>
+        <Text style={[styles.reportsHeaderTitle, { marginBottom: 0 }]}>
+          Thống kê & Báo cáo
+        </Text>
       </View>
 
       <ScrollView
@@ -185,18 +186,10 @@ export default function ReportsScreen() {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        {/* Header Section */}
-        <View style={styles.reportsHeaderSection}>
-          <Text style={styles.reportsHeaderTitle}>Thống kê & Báo cáo</Text>
-        </View>
-
         {/* Tab Navigation */}
         <View style={styles.tabContainer}>
           <TouchableOpacity
-            style={[
-              styles.tab,
-              selectedTab === "week" && styles.tabActive,
-            ]}
+            style={[styles.tab, selectedTab === "week" && styles.tabActive]}
             onPress={() => setSelectedTab("week")}
           >
             <Text
@@ -210,10 +203,7 @@ export default function ReportsScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[
-              styles.tab,
-              selectedTab === "month" && styles.tabActive,
-            ]}
+            style={[styles.tab, selectedTab === "month" && styles.tabActive]}
             onPress={() => setSelectedTab("month")}
           >
             <Text
@@ -252,7 +242,9 @@ export default function ReportsScreen() {
           <View style={styles.activityInfo}>
             <Text style={styles.activityLabel}>Mục tiêu:</Text>
             <Text style={styles.activityValue}>
-              {selectedTab === "week" ? "10,000 bước/ngày" : "250,000 bước/tháng"}
+              {selectedTab === "week"
+                ? "10,000 bước/ngày"
+                : "250,000 bước/tháng"}
             </Text>
           </View>
 
@@ -260,86 +252,8 @@ export default function ReportsScreen() {
         </View>
       </ScrollView>
 
-      {/* Sidebar Modal */}
-      <Modal
-        visible={showSidebar}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowSidebar(false)}
-      >
-        <View style={menuStyles.sidebarOverlay}>
-          <View style={menuStyles.sidebarContent}>
-            <View style={menuStyles.sidebarHeader}>
-              <Text style={menuStyles.sidebarTitle}>Menu</Text>
-              <TouchableOpacity onPress={() => setShowSidebar(false)}>
-                <Text style={menuStyles.sidebarCloseButton}>✕</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={menuStyles.sidebarBody}>
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/DashboardScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Dashboard</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/HealthInfo");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Thông tin sức khỏe</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ActivityInfo");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Mức độ vận động</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/CalendarScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Lịch tập luyện</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ReportsScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Thống kê & Báo cáo</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(auth)/Login");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Đăng xuất</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      {/* Sidebar Component */}
+      <Sidebar visible={showSidebar} onClose={() => setShowSidebar(false)} />
     </SafeAreaView>
   );
 }

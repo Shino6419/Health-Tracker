@@ -1,13 +1,14 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-    Modal,
-    SafeAreaView,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import Sidebar from "../../components/Sidebar";
 import { homeScreenStyles as menuStyles } from "../../constants/homeScreenStyles";
 
 interface DailyRecommendation {
@@ -200,11 +201,10 @@ const WEEK_SCHEDULE: DaySchedule[] = [
 
 export default function CalendarScreen() {
   const router = useRouter();
-  const [selectedDay, setSelectedDay] = useState<DaySchedule>(
-    WEEK_SCHEDULE[3]
-  );
+  const [selectedDay, setSelectedDay] = useState<DaySchedule>(WEEK_SCHEDULE[3]);
   const [showSidebar, setShowSidebar] = useState(false);
-  const [selectedActivity, setSelectedActivity] = useState<DailyRecommendation | null>(null);
+  const [selectedActivity, setSelectedActivity] =
+    useState<DailyRecommendation | null>(null);
   const [showActivityDetail, setShowActivityDetail] = useState(false);
 
   const handleSelectDay = (day: DaySchedule) => {
@@ -218,7 +218,7 @@ export default function CalendarScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* Menu Button */}
+      {/* Menu Button with Header */}
       <View style={menuStyles.headerWithMenu}>
         <TouchableOpacity
           style={menuStyles.menuButton}
@@ -226,7 +226,9 @@ export default function CalendarScreen() {
         >
           <Text style={menuStyles.menuIcon}>☰</Text>
         </TouchableOpacity>
-        <Text style={styles.calendarNotificationIcon}>🔔</Text>
+        <Text style={[styles.calendarTitle, { marginBottom: 0 }]}>
+          Gợi ý Luyện tập từ AI
+        </Text>
       </View>
 
       <ScrollView
@@ -234,12 +236,6 @@ export default function CalendarScreen() {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        {/* Header Section with Gradient */}
-        <View style={styles.calendarHeaderSection}>
-          <Text style={styles.calendarTitle}>Gợi ý Luyện tập từ AI</Text>
-          <Text style={styles.calendarSubtitle}>Kế hoạch hàng ngày của bạn</Text>
-        </View>
-
         {/* Days of Week */}
         <View style={styles.daysGrid}>
           {WEEK_SCHEDULE.map((day) => (
@@ -272,9 +268,7 @@ export default function CalendarScreen() {
         </View>
 
         {/* Current Date Label */}
-        <Text style={styles.dateLabel}>
-          Hôm nay, {selectedDay.day}
-        </Text>
+        <Text style={styles.dateLabel}>Hôm nay, {selectedDay.day}</Text>
 
         {/* Recommendations List */}
         <View style={styles.recommendationsContainer}>
@@ -311,86 +305,8 @@ export default function CalendarScreen() {
         </View>
       </ScrollView>
 
-      {/* Sidebar Modal */}
-      <Modal
-        visible={showSidebar}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowSidebar(false)}
-      >
-        <View style={menuStyles.sidebarOverlay}>
-          <View style={menuStyles.sidebarContent}>
-            <View style={menuStyles.sidebarHeader}>
-              <Text style={menuStyles.sidebarTitle}>Menu</Text>
-              <TouchableOpacity onPress={() => setShowSidebar(false)}>
-                <Text style={menuStyles.sidebarCloseButton}>✕</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={menuStyles.sidebarBody}>
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/DashboardScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Dashboard</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/HealthInfo");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Thông tin sức khỏe</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ActivityInfo");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Mức độ vận động</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/CalendarScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Lịch tập luyện</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(home)/ReportsScreen");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Thống kê & Báo cáo</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={menuStyles.sidebarItem}
-                onPress={() => {
-                  setShowSidebar(false);
-                  router.push("/(auth)/Login");
-                }}
-              >
-                <Text style={menuStyles.sidebarItemText}>Đăng xuất</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+      {/* Sidebar Component */}
+      <Sidebar visible={showSidebar} onClose={() => setShowSidebar(false)} />
 
       {/* Activity Detail Modal */}
       <Modal
