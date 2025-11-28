@@ -55,18 +55,18 @@ export default function ForgotPasswordScreen() {
         {/* Forgot Password Form Card */}
         <View style={styles.card}>
           {/* Card Header */}
-          <Text style={styles.cardTitle}>Forgot Password</Text>
+          <Text style={styles.cardTitle}>Quên Mật Khẩu</Text>
 
           {/* Description */}
           <Text style={styles.description}>
-            Enter your email or phone number and we'll send you a link to reset
-            your password
+            Nhập email hoặc số điện thoại của bạn, chúng tôi sẽ gửi cho bạn một
+            liên kết để đặt lại mật khẩu
           </Text>
 
           {/* Input */}
           <View style={styles.inputsContainer}>
             <LoginInput
-              placeholder="Email or Phone Number"
+              placeholder="Email hoặc số điện thoại"
               keyboardType="email-address"
               value={emailOrPhone}
               onChangeText={setEmailOrPhone}
@@ -76,16 +76,16 @@ export default function ForgotPasswordScreen() {
 
           {/* Reset Button */}
           <PrimaryButton
-            title="Send Reset Link"
+            title="Gửi Liên Kết"
             loading={loading}
             onPress={handleResetPassword}
           />
 
           {/* Back to Login Link */}
           <View style={styles.backToLoginContainer}>
-            <Text style={styles.backToLoginText}>Remember your password? </Text>
+            <Text style={styles.backToLoginText}>Nhớ mật khẩu? </Text>
             <TouchableOpacity onPress={() => router.push("/(auth)/Login")}>
-              <Text style={styles.backToLoginLink}>Sign In</Text>
+              <Text style={styles.backToLoginLink}>Đăng Nhập</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -59,12 +59,12 @@ export default function LoginScreen() {
         {/* Login Form Card */}
         <View style={styles.card}>
           {/* Card Header */}
-          <Text style={styles.cardTitle}>Sign In</Text>
+          <Text style={styles.cardTitle}>Đăng Nhập</Text>
 
           {/* Inputs */}
           <View style={styles.inputsContainer}>
             <LoginInput
-              placeholder="Email or Mobile Number"
+              placeholder="Email hoặc số điện thoại"
               keyboardType="email-address"
               value={email}
               onChangeText={setEmail}
@@ -72,7 +72,7 @@ export default function LoginScreen() {
             />
 
             <LoginInput
-              placeholder="Password"
+              placeholder="Mật khẩu"
               secureTextEntry
               value={password}
               onChangeText={setPassword}
@@ -85,22 +85,22 @@ export default function LoginScreen() {
             style={styles.forgotPasswordContainer}
             onPress={() => router.push("/(auth)/Forgot")}
           >
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
           </TouchableOpacity>
 
           {/* Sign In Button */}
           <PrimaryButton
-            title="Sign In"
+            title="Đăng Nhập"
             loading={loading}
             onPress={handleLogin}
           />
 
           {/* Sign Up Link */}
           <View style={styles.signupPromptContainer}>
-            <Text style={styles.signupPromptText}>Didn't Joined yet? </Text>
+            <Text style={styles.signupPromptText}>Chưa có tài khoản? </Text>
             {/* TODO: Frontend - Navigate to register screen */}
             <TouchableOpacity onPress={() => router.push("/(auth)/Register")}>
-              <Text style={styles.signupPromptLink}>Sign Up</Text>
+              <Text style={styles.signupPromptLink}>Đăng Ký</Text>
             </TouchableOpacity>
           </View>
           {/* Social Login Buttons */}
@@ -110,7 +110,7 @@ export default function LoginScreen() {
                    */}
             <SocialButton
               icon=""
-              label="Continue with Google"
+              label="Tiếp tục với Google"
               onPress={() => console.log("Google login")}
             />
           </View>
@@ -120,7 +120,7 @@ export default function LoginScreen() {
              */}
             <SocialButton
               icon="󠀠"
-              label="Continue with Apple ID"
+              label="Tiếp tục với Apple ID"
               onPress={() => console.log("Apple login")}
             />
           </View>

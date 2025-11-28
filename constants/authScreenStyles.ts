@@ -5,7 +5,7 @@ export const authScreenStyles = StyleSheet.create({
   // Common layouts
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: "#27B1A9",
   },
   scrollContent: {
     flexGrow: 1,
@@ -23,18 +23,17 @@ export const authScreenStyles = StyleSheet.create({
   appTitle: {
     fontSize: 20,
     fontFamily: typography.fontFamilyBold,
-    color: colors.primary,
+    color: "#FFFFFF",
     letterSpacing: 2,
   },
 
   // Card and Form
   card: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: "#FFFFFF",
     borderRadius: 16,
     padding: 28,
     marginBottom: 24,
-    borderWidth: 1,
-    borderColor: colors.cardBorder,
+    borderWidth: 0,
     ...shadows.card,
   },
   cardTitle: {
